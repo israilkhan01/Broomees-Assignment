@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 // const router = express.router();
 const PORT = 3000;
-
+// app.use('mysql',require("./config/db"))
 app.use(express.urlencoded())
 app.use(express.static("./assets/"))
 app.set('view engine','ejs');
