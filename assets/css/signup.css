@@ -121,18 +121,21 @@ form .row span{
     left: 3px;
     color: red;
 }
-form .row .col span:first-child,form .row .col span:last-child{
+form .row .col span[visible='on'],form .row .col span[visible='off']{
     width: fit-content;
-    display: none;
+    display: unset;
     position: absolute;
     right: 15px;
     top: 10px;
     font-size: 15px;
     left: unset;
     cursor: pointer;
+    color: black;
+    visibility: hidden;
 }
-form .row .col span:last-child{
-    display: none;
+form .row .col span[visible='on']{
+    display: unset;
+    visibility: hidden;
 }
 form input{
     width: 380px;
@@ -164,4 +167,16 @@ form input:focus{
 .row .col button:hover{
     background-color: var(--col1);
     box-shadow: 1px 1px 1px 1px;
+}
+
+#message{
+    /* position: absolute; */
+    /* top: -20px; */
+    width: 380px;
+    /* height: 25px; */
+    padding: 7px 0px;
+    text-align: center;
+    color: red;
+    border-radius: 3px;
+    background-color: #f4a5a562;
 }

@@ -42,21 +42,23 @@ module.exports.results =async function(req,res){
     // })
 }
 
-module.exports.signUp = function (req, res) {
-    const { firstname, lastname,email, username, password } = req.body;
-    const insertQuery = 'INSERT INTO USERS (firstname, lastname, username, password) VALUES (?, ?, ?, ?)';
-    const values = [firstname, lastname,email, username, password];
-    console.log(values)
-    pool.getConnection(function(err, connection) {
-
-        connection.query(insertQuery, values, (err, result) => {
-            if (err) {
-                throw err;
-            }
-    
-            console.log('User inserted successfully');
-            res.send('User inserted successfully');
+module.exports.signUp =async function (req, res) {
+    try{
+        const { firstname, lastname,email, username, password } = req.body;
+        const insertQuery = 'INSERT INTO USERS (firstname, lastname,email, username, password) VALUES (?, ?, ?,?, ?)';
+        const selectByEmail = 'SELECT * FROM USERS where email = ?'
+        const values = [firstname,lastname ,email ,username ,password];
+        // console.log(values);
+        const [rows] = await pool.query(selectByEmail,[email]);
+        console.log("rows zrerop--",rows)
+        if(rows.length==0){
+            const [result] = await pool.query(insertQuery,values);
+            console.log(result)
+            res.status(201).json({ message: 'User created successfully' });
+        }else{
+             res.send("User already exists")
         }
-        );
-    })
+    }catch(error){
+        res.send(error);   
+    }
 }

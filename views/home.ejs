@@ -48,9 +48,9 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="email" name="email" placeholder="Email" />
+                            <input type="text" name="email" placeholder="Email" />
                         </div>
-                        <span name="email">Please Enter a valid email..</span>
+                        <span name="email">Please Enter a valid email Address.</span>
                     </div>
                     <div class="row">
                         <div class="col">
@@ -60,23 +60,27 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input onchange="passwordVisibility(this)" type="password" name="password" placeholder="Password" />
-                            <span class="material-symbols-outlined">
+                            <input id="pass" type="password" name="password" placeholder="Password" />
+                            <span visible="on" class="material-symbols-outlined">
                                 visibility
                                 </span>
-                                <span class="material-symbols-outlined"> visibility_off </span>
+                                <span visible="off" class="material-symbols-outlined"> visibility_off </span>
                         </div>
                         <span name="password">Please Enter a valid password..</span>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="password" name="confirmPassword" placeholder="Confirm Password" />
-                            <span name="visibility" class="material-symbols-outlined">visibility</span>
-                            <span class="material-symbols-outlined"> visibility_off </span>
+                            <input id="confirmpass" type="password" name="confirmPassword" placeholder="Confirm Password" />
+                            <span visible="on" class="material-symbols-outlined">
+                                visibility
+                                </span>
+                                <span visible="off" class="material-symbols-outlined"> visibility_off </span>
                         </div>
-                        <span name="confirmpassword">Passwords do not match. Please try again.</span>
+                        <span name="confirmPassword">Passwords do not match. Please try again.</span>
+                        <!-- <span name="confirmpassword">Passwords do not match. Please try again.</span> -->
                     </div>
                     <div class="row">
+                        <p id="message">Please enter valid credentials.</p>
                         <div class="col">
                             <!-- <input type="submit" name="FirstName" value="GET STARTED" /> -->
                             <button id="submit" type="submit">

@@ -1,5 +1,6 @@
 const mysql = require("mysql2");
-
+const dotenv  = require("dotenv")
+dotenv.config("../")
 // const pool = mysql.createPool({
 //   host: 'localhost',
 //   user:'root',
@@ -7,10 +8,10 @@ const mysql = require("mysql2");
 // }).promise()
 
 const pool =  mysql.createPool({
-  host:'sql12.freesqldatabase.com',
-  user:'sql12629303',
-  password:'nx6cfRjCbM',
-  database:'sql12629303',
+  host:process.env.HOST,
+  user:process.env.USER,
+  password:process.env.PASSWORD,
+  database:process.env.DBNAME,
   port:3306
 }).promise();
 
@@ -27,22 +28,6 @@ results().then((results)=>{
 }).catch((error)=>{
   console.log(error);
 })
-// pool.getConnection((error,connection) => {
-//   if (error) {
-//     console.error('Error connecting to the database:', error);
-//   } else {
-//     connection.query('SELECT * FROM users', (error, results) => {
-//       // connection.release(); // Release the connection
-
-//       if (error) {
-//         throw error;
-//       }
-//       console.log(results)
-//     })
-      
-//     console.log('Connected to the database');
-//   }
-// });
 
 // function CreateSchema(){
 //   const createDatabaseQuery = 'CREATE DATABASE IF NOT EXISTS broomees';
