@@ -1,16 +1,28 @@
-// import { validateName } from "./validator";
 $(document).ready(function(){
-  // function passwordVisibility(){
-  //   return;
-  // }
   let visible = document.querySelectorAll("form .row span[visible='on']");
   let notvisible = document.querySelectorAll("form .row span[visible='off']");
   
+  for(let i=0 ;i<2;i++){
+    visible[i].addEventListener('click',function(event){
+      event.preventDefault();
+      visible[i].style.visibility = 'hidden';
+      notvisible[i].style.visibility = 'visible';
+      let pass = document.getElementById(`${event.target.getAttribute('accesatr')}`);
+      pass.type = "text";
+     
+    });
+    notvisible[i].addEventListener('click',function(event){
+      event.preventDefault();
+      visible[i].style.visibility = 'visible';
+      notvisible[i].style.visibility = 'hidden';
+      let pass = document.getElementById(`${event.target.getAttribute('accesatr')}`);
+      pass.type = "password";
+    })
+  }
   // validate password for its chars
   function validatePassword(password) {
-    var regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/;
-  
-    return regex.test(password);
+      var regex = /^(?=.*[a-zA-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{7,}$/;
+      return regex.test(password);
   }
   function onChangeHandler(event){
       event.preventDefault(); // Prevent the form from submitting normally
@@ -41,10 +53,6 @@ $(document).ready(function(){
 
     $("#signUpForm").submit(function(event) {
         event.preventDefault(); // Prevent the form from submitting normally
-        function passwordVisibility(){
-          console.log('sdsds');
-         }
-
         var form = document.getElementById('signUpForm');
         var firstnameInput = form.elements['firstname'];
         var lastnameInput = form.elements['lastname'];
@@ -66,7 +74,7 @@ $(document).ready(function(){
               errSpan.style.display = 'unset';
               firstnameInput.focus();
               
-            }else if(validateInput(lastnameInput.value.trim())){
+            }else if(validateInput(firstnameInput.value.trim())){
               let errSpan = document.querySelector("form .row span[name='name']")
               errSpan.style.display = 'none';
             }
@@ -120,13 +128,24 @@ $(document).ready(function(){
               errSpan.style.display = 'unset';
               passwordInput.focus();
               
+            }else if(!validatePassword(passwordInput.value.trim())){
+              isValid = false;
+              let errSpan = document.querySelector("form .row span[name='password']")
+              errSpan.style.display = 'unset';
+              passwordInput.focus();
             }else{
               let errSpan = document.querySelector("form .row span[name='password']")
               errSpan.style.display = 'none';
             }
         
             // Validate confirm password
-            if (passwordInput.value !== confirmPasswordInput.value) {
+            if (passwordInput.value.trim() === '') {
+              isValid = false;
+              let errSpan = document.querySelector("form .row span[name='confirmPassword']")
+              errSpan.style.display = 'unset';
+              passwordInput.focus();
+              
+            }else if (passwordInput.value !== confirmPasswordInput.value) {
               isValid = false;
               passwordInput.value = '';
               confirmPasswordInput.value = '';
@@ -151,7 +170,7 @@ $(document).ready(function(){
         // Regular expression to check for HTML tags or entities
         var htmlRegex = /<[^>]+>|&[^;]+;/g;
         
-        // Check if the input value contains HTML tags or entities
+        // Check if the input value contains HTML tags 
         if (htmlRegex.test(inputValue)) {
           return false; // Input contains HTML
         }
@@ -160,24 +179,44 @@ $(document).ready(function(){
       }
 
       var formData = $(this).serialize();
-      let message = document.getElementById("#message");
+      let statusMessage = document.getElementById("message");
+      statusMessage.innerHTML = ""
+      statusMessage.style.height = "0px"
+      statusMessage.style.color = "red";
+      // statusMessage.style.backgroundColor = 'lightgrey'
       if(isAllValid()){
         $.ajax({
           url: '/create-user',
           type: 'POST',
           data: formData,
           success: function(response) {
-            console.log(response); // Response from the server
+            statusMessage.style.height = "28px"
+            if(response.error){
+              statusMessage.innerHTML = response.error;
+            }else if(response.success){
+              statusMessage.style.color = "green";
+              statusMessage.style.backgroundColor = 'var(--grey)'
+              statusMessage.innerHTML = response.success;
+              window.alert("Redirecting to localhost:3000/results to get all users");
+              setTimeout(()=>{
+                window.location.href = '/results';
+              },3000)
+            }
+            console.log("reponse -",response); // Response from the server
             // Handle the response as needed
           },
           error: function(error) {
-            console.error(error);
+            console.error(error.error);
+            statusMessage.style.height = "28px"
+            statusMessage.innerHTML = error.error;
+            console.log(error.error); 
             // Handle any errors that occur during the request
           }
         });
       }else{
-        console.log("not valid credentials")
-        message.innerHTML = "Plesase enter valid credentials"
+        statusMessage.style.height = "28px"
+        // console.log("not valid credentials",message)
+        statusMessage.innerHTML = "Plesase enter valid credentials."
       }
     })
 });
