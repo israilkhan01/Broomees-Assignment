@@ -4,6 +4,7 @@ const app = express();
 const PORT = 3000;
 // app.use('mysql',require("./config/db"))
 app.use(express.urlencoded())
+// app.use(express.json());
 app.use(express.static("./assets/"))
 app.set('view engine','ejs');
 app.set('views','./views');

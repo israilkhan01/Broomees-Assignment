@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" href="/css/signup.css" />
+    <script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
     <title><%=title%></title>
   </head>
   <body>
@@ -27,49 +29,57 @@
                     SIGN IN
                 </button>
             </div>
-            <div class="form">
+            <div class="form" >
                 <h1>
                     Explore & Experience
                 </h1>
                 <p>
                     Get onto your most comfortable journey yet. All the way up
                 </p>
-                <form action="">
+                <form  id="signUpForm" action="/create-user" method="post">
                     <div class="row">
                         <div class="col">
-                            <input type="text" name="firstName" placeholder="FirstName" />
+                            <input type="text" name="firstname" placeholder="FirstName" />
                         </div>
                         <div class="col">
-                            <input type="text" name="lastName" placeholder="LastName" />
+                            <input type="text" name="lastname" placeholder="LastName" />
                         </div>
+                        <span name="name">Please enter your full name.</span>
                     </div>
                     <div class="row">
                         <div class="col">
                             <input type="email" name="email" placeholder="Email" />
                         </div>
+                        <span name="email">Please Enter a valid email..</span>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="text" name="userName" placeholder="Username" />
-
+                            <input type="text" name="username" placeholder="Username" />
                         </div>
+                        <span name="username">Please Enter a valid username..</span>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="password" name="FirstName" placeholder="Password" />
-
+                            <input onchange="passwordVisibility(this)" type="password" name="password" placeholder="Password" />
+                            <span class="material-symbols-outlined">
+                                visibility
+                                </span>
+                                <span class="material-symbols-outlined"> visibility_off </span>
                         </div>
+                        <span name="password">Please Enter a valid password..</span>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <input type="password" name="FirstName" placeholder="Confirm Password" />
-
+                            <input type="password" name="confirmPassword" placeholder="Confirm Password" />
+                            <span name="visibility" class="material-symbols-outlined">visibility</span>
+                            <span class="material-symbols-outlined"> visibility_off </span>
                         </div>
+                        <span name="confirmpassword">Passwords do not match. Please try again.</span>
                     </div>
                     <div class="row">
                         <div class="col">
                             <!-- <input type="submit" name="FirstName" value="GET STARTED" /> -->
-                            <button type="submit">
+                            <button id="submit" type="submit">
                                 GET STARTED
                             </button>
 
@@ -79,5 +89,6 @@
             </div>
         </div>
      </main>
+     <script src="/js/signup.js"></script>
   </body>
 </html>
